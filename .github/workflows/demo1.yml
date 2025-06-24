@@ -1,8 +1,19 @@
 name: Events Demo 1
 on:
   pull_request:
+    # here is an activity type
     types: [opened]
   workflow_dispatch:
+  push:
+    # here we will filter per branch. All the next rules specify the cases where the workflow WILL be executed
+    branches:
+      - main
+      #  we can write here whatever we want, for example filter by specfific name kinda
+      - "feature-*" #covers feature-doX , feature-do-something-else, etc.
+      - "bugfix/**" # covers bugfix/button, bugfix/users/something, etc.
+    # another fiflter to avoid running the workflow if the files changed are not located in the next paths
+      paths-ignore:
+      - '.github/workflows/*'
 jobs:
   deploy:
     runs-on: ubuntu-latest
